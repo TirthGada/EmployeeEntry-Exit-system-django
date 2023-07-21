@@ -1,0 +1,15 @@
+<!-- office/templates/office/enter_employee.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enter Employee Entry Time</title>
+</head>
+<body>
+    <h1>Enter Employee Entry Time</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

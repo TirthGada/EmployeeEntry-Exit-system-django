@@ -1,0 +1,18 @@
+<!-- office/templates/office/exit_employee.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enter Employee Exit Time</title>
+</head>
+<body>
+    <h1>Enter Employee Exit Time</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+</body>
+</html>
