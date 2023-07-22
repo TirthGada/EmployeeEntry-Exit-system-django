@@ -1,1 +1,0 @@
-# EmployeeEntry-Exit-system-django
