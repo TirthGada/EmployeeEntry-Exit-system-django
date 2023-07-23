@@ -4,8 +4,14 @@ from .forms import EmployeeForm
 from .models import Employee, EntryExitRecord
 from datetime import datetime
 from django.core.mail import send_mail
+from datetime import timedelta
+from .models import Employee, LeaveApplication
+from .forms import LeaveApplicationForm
+from django.db.models import F
+from django.db.models.functions import TruncDate
 
-# ...
+
+
 
 def enter_employee(request):
     if request.method == 'POST':
@@ -43,6 +49,9 @@ def enter_employee(request):
 # ...
 
 
+
+
+
 def exit_employee(request):
     if request.method == 'POST':
         form = EmployeeForm(request.POST)
@@ -72,8 +81,15 @@ def exit_employee(request):
 
     return render(request, 'office/exit_employee.html', {'form': form})
 
+
+
+
 def index(request):
     return render(request, 'office/index.html')
+
+
+
+
 
 def create_employee_profile(request):
     if request.method == 'POST':
@@ -106,6 +122,10 @@ def create_employee_profile(request):
 
     return render(request, 'office/create_employee_profile.html', {'form': form})
 
+
+
+
+
 def dashboard(request):
     if request.method == 'POST':
         employee_id = request.POST.get('employee_id')
@@ -121,6 +141,10 @@ def dashboard(request):
 
     return render(request, 'office/dashboard.html')
 
+
+
+
+
 def send_email_to_employee(first_name, last_name, email):
     subject = 'Office Entry Notification'
     message = f'Hello {first_name} {last_name},\n\nThis is to notify you that you have entered the office premises.\n\nThank you.\n'
@@ -128,3 +152,58 @@ def send_email_to_employee(first_name, last_name, email):
     recipient_list = [email]
 
     send_mail(subject, message, from_email, recipient_list)
+
+
+
+
+def apply_leave(request):
+    if request.method == 'POST':
+        employee_id = request.POST.get('employee_id')
+        start_date = request.POST.get('start_date')  # Corrected to use parentheses for .get()
+        end_date = request.POST.get('end_date')  # Corrected to use parentheses for .get()
+        reason = request.POST.get('reason')  # Corrected to use parentheses for .get()
+
+        try:
+            employee = Employee.objects.get(employee_id=employee_id)
+            # entry_exit_records = EntryExitRecord.objects.filter(employee=employee)  # No need for this line
+        except Employee.DoesNotExist:
+            employee = None
+            # entry_exit_records = None  # No need for this line
+
+        if employee:
+            LeaveApplication.objects.create(employee=employee, start_date=start_date, end_date=end_date, reason=reason)
+            return redirect('')
+        else:
+            return redirect('create_employee_profile')
+
+    else:
+        form = LeaveApplicationForm()
+        return render(request, 'office/apply_leave.html', {'form': form})
+
+
+
+
+def senior_dashboard(request):
+    pending_leave_applications = LeaveApplication.objects.filter(leave_approved=False, leave_rejected=False)
+
+    return render(request, 'office/senior_dashboard.html', {'pending_leave_applications': pending_leave_applications})
+
+
+def approve_leave(request, leave_id):
+    try:
+        leave_application = LeaveApplication.objects.get(id=leave_id)
+    except LeaveApplication.DoesNotExist:
+        leave_application = None
+
+    if leave_application:
+        if request.method == 'POST':
+            if 'approve' in request.POST:
+                leave_application.leave_approved = True
+                leave_application.leave_rejected = False
+            elif 'reject' in request.POST:
+                leave_application.leave_approved = False
+                leave_application.leave_rejected = True
+            leave_application.save()
+        return redirect('senior_dashboard')
+    else:
+        return redirect('senior_dashboard')

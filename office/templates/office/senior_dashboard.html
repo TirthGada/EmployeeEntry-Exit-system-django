@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- ... (your existing meta tags and title) ... -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .dashboard-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .leave-application {
+            margin-bottom: 10px;
+        }
+
+        .leave-application p {
+            margin: 0;
+        }
+
+        .leave-application form {
+            display: inline-block;
+        }
+
+        .leave-application input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .leave-application input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .no-applications {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Senior Dashboard</h1>
+    {% if pending_leave_applications %}
+        <h2>Pending Leave Applications</h2>
+        <div class="dashboard-box">
+            {% for application in pending_leave_applications %}
+                <div class="leave-application">
+                    <p>{{ application.employee.first_name }} {{ application.employee.last_name }} - {{ application.start_date }} to {{ application.end_date }}</p>
+                    <form method="post" action="{% url 'approve_leave' application.id %}">
+                        {% csrf_token %}
+                        <input type="submit" name="approve" value="Approve">
+                        <input type="submit" name="reject" value="Reject">
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-applications">No pending leave applications.</p>
+    {% endif %}
+</body>
+</html>
+
+

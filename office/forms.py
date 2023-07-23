@@ -7,3 +7,12 @@ class EmployeeForm(forms.Form):
     last_name = forms.CharField(max_length=100)
     employee_id = forms.CharField(max_length=10)
 
+from .models import LeaveApplication
+
+class LeaveApplicationForm(forms.Form):
+    employee_id = forms.CharField(max_length=10)
+    start_date=forms.DateField()
+    end_date=forms.DateField()
+    reason=forms.CharField(max_length=1000)
+
+
