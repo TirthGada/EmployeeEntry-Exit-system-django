@@ -3,11 +3,7 @@ from django.shortcuts import render, redirect
 from .forms import EmployeeForm
 from .models import Employee, EntryExitRecord
 from datetime import datetime
-
-from django.shortcuts import render, redirect
-from .forms import EmployeeForm
-from .models import Employee, EntryExitRecord
-from datetime import datetime
+from django.core.mail import send_mail
 
 # ...
 
@@ -28,6 +24,11 @@ def enter_employee(request):
                 print(f"Employee {employee_id} entered at {entry_time}")
                 # Create an EntryExitRecord for the employee with the entry time
                 EntryExitRecord.objects.create(employee=employee, entry_time=entry_time)
+
+                #first_name = employee.first_name
+                #last_name = employee.last_name
+                #email = f"{first_name.lower()}{last_name.lower()}1@gmail.com"
+                #send_email_to_employee(first_name, last_name, email)
             else:
                 # Redirect to create_employee_profile view
                 return redirect('create_employee_profile')
@@ -108,7 +109,8 @@ def create_employee_profile(request):
 def dashboard(request):
     if request.method == 'POST':
         employee_id = request.POST.get('employee_id')
-
+        first_name=None
+        last_name=None
         try:
             employee = Employee.objects.get(employee_id=employee_id)
             entry_exit_records = EntryExitRecord.objects.filter(employee=employee)
@@ -118,3 +120,11 @@ def dashboard(request):
         return render(request, 'office/dashboard.html', {'entry_exit_records': entry_exit_records,'employee':'employee'})
 
     return render(request, 'office/dashboard.html')
+
+def send_email_to_employee(first_name, last_name, email):
+    subject = 'Office Entry Notification'
+    message = f'Hello {first_name} {last_name},\n\nThis is to notify you that you have entered the office premises.\n\nThank you.\n'
+    from_email = 'tirthgada91@gmail.com' 
+    recipient_list = [email]
+
+    send_mail(subject, message, from_email, recipient_list)

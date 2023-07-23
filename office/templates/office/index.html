@@ -27,6 +27,11 @@
         margin-top: 130px; 
     }
 
+    .card {
+        box-shadow: 0 4px 8px rgba(1, 0, 0, 1);
+        height: 200px; /* Set a fixed height for all cards */
+    }
+
     .card:hover {
         border: 13px solid; /* Increase the border width */
         border-image: linear-gradient(35deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3); /* Rainbow colors */
@@ -46,8 +51,8 @@
             <div class="col-md-2">
                 <div class="card" style="background-color:#ffe6e6 ;">
                     <div class="card-body">
-                        <h5 class="card-title">Enter Office</h5>
-                        <a href="{% url 'enter_employee' %}" class="btn btn-primary">Enter</a>
+                        <h5 class="card-title my-3">Enter Office</h5>
+                        <a href="{% url 'enter_employee' %}" class="btn btn-primary my-3">Enter</a>
                     </div>
                 </div>
             </div>
@@ -55,27 +60,33 @@
             <div class="col-md-2">
                 <div class="card" style="background-color:#ffe6e6 ;">
                     <div class="card-body">
-                        <h5 class="card-title">Exit Office</h5>
-                        <a href="{% url 'exit_employee' %}" class="btn btn-danger">Exit</a>
+                        <h5 class="card-title my-3">Exit Office</h5>
+                        <a href="{% url 'exit_employee' %}" class="btn btn-danger my-3">Exit</a>
                     </div>
                 </div>
             </div>
 
-        <div class="row justify-content-center my-3 py-3">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="card" style="background-color:#ffe6e6 ;">
                     <div class="card-body">
-                        <h5 class="card-title">New to ABC        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+                        <h5 class="card-title my-3">New to ABC        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
                             <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                             <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
                           </svg></h5>
-                        <a href="{% url 'create_employee_profile' %}" class="btn btn-warning">Create profile now</a>
+                        <a href="{% url 'create_employee_profile' %}" class="btn btn-warning my-3">Create profile</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="card" style="background-color:#ffe6e6 ;">
+                    <div class="card-body">
+                        <h5 class="card-title my-3">Dashboard</h5>
+                        <a href="{% url 'dashboard' %}" class="btn btn-success my-3">View</a>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
     </div>
-
 </body>
 </html>
