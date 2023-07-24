@@ -11,5 +11,6 @@ urlpatterns = [
     path('apply_leave/', views.apply_leave, name='apply_leave'),
     path('senior_dashboard/', views.senior_dashboard, name='senior_dashboard'),
     path('approve_leave/<int:leave_id>/', views.approve_leave, name='approve_leave'),
+    path('status/',views.status,name='status')
 ]
 

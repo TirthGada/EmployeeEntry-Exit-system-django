@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect
-from .forms import EmployeeForm
-from .models import Employee, EntryExitRecord
+from .forms import EmployeeForm,LoginForm
+from .models import Employee, EntryExitRecord,Senior
 from datetime import datetime
 from django.core.mail import send_mail
 from datetime import timedelta
@@ -9,6 +9,7 @@ from .models import Employee, LeaveApplication
 from .forms import LeaveApplicationForm
 from django.db.models import F
 from django.db.models.functions import TruncDate
+from django.contrib.auth import authenticate, login
 
 
 
@@ -182,11 +183,36 @@ def apply_leave(request):
 
 
 
-
 def senior_dashboard(request):
-    pending_leave_applications = LeaveApplication.objects.filter(leave_approved=False, leave_rejected=False)
+    if request.method == 'POST':
+        login_form = LoginForm(request.POST)
+        senior_id = request.POST.get('senior_id')
+        password = request.POST.get('password')  # Corrected to use parentheses for .get()
 
-    return render(request, 'office/senior_dashboard.html', {'pending_leave_applications': pending_leave_applications})
+        try:
+            sen = Senior.objects.get(senior_id=senior_id, password=password)
+            # entry_exit_records = EntryExitRecord.objects.filter(employee=employee)  # No need for this line
+        except Senior.DoesNotExist:
+            sen = None
+            # entry_exit_records = None  # No need for this line
+
+        if sen:
+            pending_leave_applications = LeaveApplication.objects.filter(leave_approved=False, leave_rejected=False)
+            return render(request, 'office/senior_dashboard.html', {'pending_leave_applications': pending_leave_applications,'senior_id':senior_id})
+        else:
+            return render(request, 'office/login.html', {'login_form': login_form, 'error_message': 'Invalid senior ID or password.'})
+
+    else:
+        login_form = LoginForm()
+        return render(request, 'office/login.html', {'login_form': login_form})
+
+
+
+
+
+
+
+
 
 
 def approve_leave(request, leave_id):
@@ -207,3 +233,19 @@ def approve_leave(request, leave_id):
         return redirect('senior_dashboard')
     else:
         return redirect('senior_dashboard')
+    
+
+
+def status(request):
+    if request.method == 'POST':
+        employee_id = request.POST.get('employee_id')
+
+        try:
+            employee = Employee.objects.get(employee_id=employee_id)
+            records = LeaveApplication.objects.filter(employee=employee)
+        except Employee.DoesNotExist:
+            records = None
+
+        return render(request, 'office/status.html', {'records': records})
+
+    return render(request, 'office/status.html')

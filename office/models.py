@@ -20,8 +20,19 @@ class LeaveApplication(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     reason = models.TextField()
-    leave_approved = models.BooleanField(default=False)
-    leave_rejected = models.BooleanField(default=False)
+    leave_approved = models.BooleanField(choices=[(True, 'Yes'), (False, 'No')], default=False)
+    leave_rejected = models.BooleanField(choices=[(True, 'Yes'), (False, 'No')], default=False)
 
     def __str__(self):
         return f"{self.employee.first_name} {self.employee.last_name} - {self.start_date} to {self.end_date}"
+
+    def get_leave_approved_display(self):
+        return "Yes" if self.leave_approved else ""
+
+    def get_leave_rejected_display(self):
+        return "Yes" if self.leave_rejected else ""
+
+
+class Senior(models.Model):
+    senior_id=models.CharField(max_length=10)
+    password=models.CharField(max_length=20)

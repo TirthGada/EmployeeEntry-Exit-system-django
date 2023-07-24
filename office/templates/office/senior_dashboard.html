@@ -6,6 +6,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            color: #4285F4;
+            background-color: #f5f1dc;
         }
 
         .dashboard-box {
@@ -36,6 +38,7 @@
             border-radius: 5px;
             cursor: pointer;
             margin-left: 10px;
+            margin-top: 25px;
         }
 
         .leave-application input[type="submit"]:hover {
@@ -45,21 +48,30 @@
         .no-applications {
             font-style: italic;
         }
+
+        .leave-application input[type="submit"][name="reject"] {
+            background-color: #e53935; /* Change to red color code (#e53935) */
+            margin-top:2px;
+        }
+
     </style>
 </head>
 <body>
-    <h1>Senior Dashboard</h1>
+   <center> <h1>Senior Dashboard      </h1></center>
+   <h2>Your id :{{senior_id}}</h2>
     {% if pending_leave_applications %}
         <h2>Pending Leave Applications</h2>
         <div class="dashboard-box">
             {% for application in pending_leave_applications %}
-                <div class="leave-application">
+                <div class="leave-application ">
                     <p>{{ application.employee.first_name }} {{ application.employee.last_name }} - {{ application.start_date }} to {{ application.end_date }}</p>
+                     <p>Leave Reason: {{application.reason}}</p>
                     <form method="post" action="{% url 'approve_leave' application.id %}">
                         {% csrf_token %}
+                        <div class="container my-3">
                         <input type="submit" name="approve" value="Approve">
                         <input type="submit" name="reject" value="Reject">
-                    </form>
+                        </div>  </form>
                 </div>
             {% endfor %}
         </div>

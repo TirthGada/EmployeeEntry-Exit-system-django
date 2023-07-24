@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f1dc;
+            text-align: center;
+            padding-top: 50px;
+        }
+        h1 {
+            color: #4285F4;
+            font-size: 36px;
+            margin-top: 20px;
+        }
+        form {
+            margin-top: 30px;
+        }
+        label {
+            font-size: 18px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #4285F4;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #4285F4;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #4285F4;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        p {
+            font-size: 18px;
+            color: #4285F4;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Leave Status</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="employee_id">Employee ID:</label>
+        <input type="text" id="employee_id" name="employee_id" required>
+        <br>
+        <input type="submit" value="Show Attendance">
+    </form>
+
+    {% if records %}
+        <h2>Leave Status for {{ records.0.employee.first_name }} {{ records.0.employee.last_name }}</h2>
+        <table>
+            <tr>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Reason</th>
+                <th>Approved</th>
+                <th>Rejected</th>
+            </tr>
+            {% for record in records %}
+                <tr>
+                    <td>{{ record.start_date }}</td>
+                    <td>{{ record.end_date }}</td>
+                    <td>{{ record.reason }}</td>
+                    <td>{{ record.get_leave_approved_display}}</td>
+                    <td>{{ record.get_leave_rejected_display }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No pending leaves found for the given employee.</p>
+    {% endif %}
+</body>
+</html>

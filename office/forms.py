@@ -1,6 +1,7 @@
 # office/forms.py
 
 from django import forms
+from . models import Senior
 
 class EmployeeForm(forms.Form):
     first_name = forms.CharField(max_length=100)
@@ -15,4 +16,8 @@ class LeaveApplicationForm(forms.Form):
     end_date=forms.DateField()
     reason=forms.CharField(max_length=1000)
 
+
+class LoginForm(forms.Form):
+    senior_id = forms.CharField(max_length=10)
+    password = forms.CharField(max_length=20, widget=forms.PasswordInput)
 

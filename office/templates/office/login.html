@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Senior Dashboard Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color:#f5f1dc ;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f1dc;
+            border-radius: 5px;
+        }
+
+        .login-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top:230px;
+            color: #007bff;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-form input[type="submit"] {
+            width: 100%;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .login-form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container ">
+        <h1>Senior Dashboard Login</h1>
+        <form class="login-form" method="post">
+            {% csrf_token %}
+            <label for="{{ login_form.senior_id.id_for_label }}">Senior ID:</label>
+            {{ login_form.senior_id }}
+            <label for="{{ login_form.password.id_for_label }}">Password:</label>
+            {{ login_form.password }}
+            <input type="submit" value="Login">
+        </form>
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+
