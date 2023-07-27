@@ -5,8 +5,8 @@ from .models import Employee, EntryExitRecord,Senior
 from datetime import datetime
 from django.core.mail import send_mail
 from datetime import timedelta
-from .models import Employee, LeaveApplication
-from .forms import LeaveApplicationForm
+from .models import Employee, LeaveApplication,Reward
+from .forms import LeaveApplicationForm,RewardForm
 from django.db.models import F
 from django.db.models.functions import TruncDate
 from django.contrib.auth import authenticate, login
@@ -249,3 +249,25 @@ def status(request):
         return render(request, 'office/status.html', {'records': records})
 
     return render(request, 'office/status.html')
+
+
+
+def reward(request):
+    if request.method == 'POST':
+        form = RewardForm(request.POST)
+        if form.is_valid():
+            employee_id = form.cleaned_data['employee_id']
+
+            try:
+                employee = Employee.objects.get(employee_id=employee_id)
+            except Employee.DoesNotExist:
+                employee = None
+
+            if employee:
+                rewardprize = Reward.objects.filter(employee=employee)
+                return render(request, 'office/reward.html', {'rewardprize': rewardprize})
+
+    else:
+        form = RewardForm()
+
+    return render(request, 'office/reward.html', {'form': form})

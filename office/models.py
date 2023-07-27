@@ -36,3 +36,8 @@ class LeaveApplication(models.Model):
 class Senior(models.Model):
     senior_id=models.CharField(max_length=10)
     password=models.CharField(max_length=20)
+
+class Reward(models.Model):
+    employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
+    prize=models.CharField(max_length=50)
+    claim_link=models.CharField(max_length=100)

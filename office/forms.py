@@ -21,3 +21,5 @@ class LoginForm(forms.Form):
     senior_id = forms.CharField(max_length=10)
     password = forms.CharField(max_length=20, widget=forms.PasswordInput)
 
+class RewardForm(forms.Form):
+    employee_id=forms.CharField(max_length=20)
