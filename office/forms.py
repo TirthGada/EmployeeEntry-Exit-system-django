@@ -23,3 +23,6 @@ class LoginForm(forms.Form):
 
 class RewardForm(forms.Form):
     employee_id=forms.CharField(max_length=20)
+
+
+

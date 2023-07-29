@@ -173,7 +173,7 @@ def apply_leave(request):
 
         if employee:
             LeaveApplication.objects.create(employee=employee, start_date=start_date, end_date=end_date, reason=reason)
-            return redirect('')
+            return redirect('dashboard')
         else:
             return redirect('create_employee_profile')
 
@@ -200,8 +200,7 @@ def senior_dashboard(request):
             pending_leave_applications = LeaveApplication.objects.filter(leave_approved=False, leave_rejected=False)
             return render(request, 'office/senior_dashboard.html', {'pending_leave_applications': pending_leave_applications,'senior_id':senior_id})
         else:
-            return render(request, 'office/login.html', {'login_form': login_form, 'error_message': 'Invalid senior ID or password.'})
-
+            return render(request, 'office/senior_dashboard.html')
     else:
         login_form = LoginForm()
         return render(request, 'office/login.html', {'login_form': login_form})
@@ -271,3 +270,4 @@ def reward(request):
         form = RewardForm()
 
     return render(request, 'office/reward.html', {'form': form})
+
