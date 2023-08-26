@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Your Company</title>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .welcome-container {
+            text-align: center;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
+            flex: 1; 
+            margin-right: 20px;
+            margin-top:30px;
+            height: auto;
+        }
+
+        .cards-container {
+            flex: 2; 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            padding: 20px;
+            text-align: center;
+            height: auto;
+            width: 480px;
+            margin-left: 80px;
+            margin-top: 30px;
+        }
+
+        h1 {
+            color: #333333;
+            margin-bottom: 10px;
+        }
+
+        .team-name {
+            font-size: 18px;
+            color: #666666;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        /* Add more styles as needed */
+
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        
+        <h1>Welcome, {{ employee.first_name }}!</h1>
+        <p class="team-name">You are part of the {{ employee.teamname }} team.</p>
+        <!-- Add more content here -->
+    </div>
+
+    <div class="cards-container">
+        <div class="card">
+            <h2>Card A</h2>
+            <p>Content of Card A goes here.</p>
+        </div>
+    </div>
+</body>
+</html>
