@@ -38,8 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'main.apps.MainConfig',
     'office.apps.OfficeConfig',
-    'tasks.apps.TasksConfig'
+    'tasks.apps.TasksConfig',
+    'chat.apps.ChatConfig',
+
+
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +87,17 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
+
+# settings.py
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 8000)],  # Change the port to 8000
+        },
+    },
 }
 
 

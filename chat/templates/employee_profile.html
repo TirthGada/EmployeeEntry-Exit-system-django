@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ employee.first_name }}'s Profile</title>
+    <!-- Add your CSS styles or external stylesheet links here -->
+</head>
+<body>
+    <h1>{{ employee.first_name }}'s Profile</h1>
+
+    <h2>Sent Messages:</h2>
+    <ul>
+        {% for message in sent_messages %}
+            <li>{{ message.content }} (Sent to: {{ message.recipient.first_name }})</li>
+        {% empty %}
+            <li>No sent messages.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Received Messages:</h2>
+    <ul>
+        {% for message in received_messages %}
+            <li>{{ message.content }} (Received from: {{ message.sender.first_name }})</li>
+        {% empty %}
+            <li>No received messages.</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Add any additional content or features here -->
+
+</body>
+</html>
