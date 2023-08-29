@@ -8,7 +8,6 @@ class Task(models.Model):
     completion_date=models.DateField()
     task_desc=models.CharField(max_length=500)
     status=models.BooleanField(choices=[(True, 'Yes'), (False, 'No')], default=False)
-    
 
 
     def __str__(self):
