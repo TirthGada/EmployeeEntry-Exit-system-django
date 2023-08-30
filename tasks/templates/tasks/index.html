@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office Employee Entry-Exit Management</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js"></script>
+<!-- Additional Styles -->
+<style>
+    .star {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: #fff;
+        clip-path: polygon(
+            50% 0%,
+            61% 38%,
+            100% 38%,
+            69% 62%,
+            80% 100%,
+            50% 77%,
+            20% 100%,
+            31% 62%,
+            0% 38%,
+            39% 38%
+        );
+        pointer-events: none; /* Make the stars not block mouse interaction */
+    }
+
+
+    .book {
+        width: 40px;
+        height: 50px;
+        background-color: #4285F4;
+        border-radius: 5px;
+        position: absolute;
+        transform-origin: center;
+    }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+    // Wait for the DOM to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        const body = document.body;
+
+        // Function to create a book element and animate it
+        function createBook(event) {
+            const book = document.createElement("div");
+            book.classList.add("book");
+            body.appendChild(book);
+
+            // Calculate random offset for the position
+            const xOffset = Math.random() * 800 - 20;
+            const yOffset = Math.random() * 800 - 20;
+
+            // Position the book near the cursor with offset
+            book.style.left = (event.clientX - 20 + xOffset) + "px";
+            book.style.top = (event.clientY - 25 + yOffset) + "px";
+
+            anime({
+                targets: book,
+                opacity: [1, 0],
+                translateY: -50,
+                duration: 1500,
+                easing: "easeOutExpo",
+                complete: () => {
+                    book.remove();
+                }
+            });
+        }
+
+        // Create books on mousemove event
+        body.addEventListener("mousemove", createBook);
+
+        // Additional animation for books
+        anime({
+            targets: ".book",
+            rotate: 360,
+            duration: 500,
+            loop: true,
+            easing: "linear"
+        });
+    });
+</script>
+
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<style>
+body {
+    background-color: #fb7b04; /* Gradient colors */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh; /* Set the height of the body to 100% viewport height */
+    font-family: Copperplate;
+}
+h1 {
+    background: linear-gradient(to right, #ccffcc, #f11712,#FFD700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 39px;
+    margin-top: 90px; 
+}
+
+.card {
+    position: relative;
+    width: 200px;
+    height: 200px;
+opacity: 1;
+background-image: linear-gradient(to left, #abc9e5, #b2d9e2, #c9e5e0, #e4efe5, #f9f9f4);
+    border-radius: 10% / 55%;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    overflow: hidden; /* Clip the content within the hexagon shape */
+    transition: transform 0.3s, box-shadow 0.3s;
+
+    color: #800000;
+    font-weight: bold; /* Set font weight to bold */
+}
+
+.card:hover {
+    background-image: radial-gradient(circle, #e99fc8, #f9b4ba, #f8cdbd, #f4e5d4, #f9f9f4);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-10px);
+}
+
+/* Rainbow border on hover */
+.card:hover::before {
+    content: "";
+    position: absolute;
+    top: -4%;
+    left: -4%;
+    right: -4%;
+    bottom: -4%;
+    border-radius: 10% / 55%;
+    border: 6px solid;
+    border-image: linear-gradient(35deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3); /* Rainbow colors */
+    border-image-slice: 1; /* Make the entire border gradient */
+    z-index: -1;
+}
+    .btn {
+        border-radius: 10px; /* Rounded button */
+    }
+
+    .goog{
+        margin-top: 100px;
+    }
+
+</style>
+<body>
+<div class="goog">
+   <center> <img src="https://www.singlemindconsulting.com/wp-content/uploads/2020/08/benefits-of-blackboard-to-moodle-migration.jpg"200" height="150" ></center>
+</div>
+    <div class="container my-3">
+        <div class="row justify-content-center my-3 py-3" style="margin-left: 85px;">
+
+
+            <div class="col-md-3">
+                <div class="card" style="background-color:#ffe6e6 ;">
+                    <div class="card-body">
+                        <h5 class="card-title my-3">Login to Moodle</h5>
+                        <a href="{% url 'login' %}" class="btn btn-light my-3">View</a>
+                    </div>
+                </div>
+            </div>
+
+    </div></div></div>
+
+
+</body>
+</html>

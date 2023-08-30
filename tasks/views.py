@@ -4,7 +4,7 @@ from office.forms import EmployeeForm
 from datetime import datetime
 from .models import Task
 def login(request):
-    if request.method == 'POST':
+    if request.method == 'POST' :
         form = EmployeeForm(request.POST)
 
         if form.is_valid():
